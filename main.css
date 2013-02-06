@@ -1,0 +1,11 @@
+body {
+    background:black;
+}
+
+.title {
+    color: beige;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+
+}

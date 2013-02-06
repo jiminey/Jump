@@ -8,7 +8,7 @@ sprite = new Image();
 sprite.src = "src/assets/tileset.png";
 
 rocks = new Image(); 
-rocks.src = "src/assets/rocks.png";
+rocks.src = "src/assets/rocks.jpg";
 
 background = new Image();
 background.src = "src/assets/background.jpg";
@@ -31,10 +31,10 @@ document.addEventListener("keyup", keyUp);
  //generate platforms
 
 const platform = {
-    sX: 30,
-    sY: 0,
-    w: 32,
-    h: 34,
+    sX: 0,
+    sY: 114,
+    w: 105,
+    h: 105,
     x: 250,
     y: cvs.height - 48,
 
