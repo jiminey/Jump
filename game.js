@@ -57,6 +57,7 @@ const platform = {
                     h: Math.round(Math.random() * 40 + 30),
                 }
             );
+            this.dy += .1; 
         }
 
 
@@ -403,7 +404,10 @@ const bg = {
     },
 
     update() {
-        this.y = (this.y + this.dy) % (this.h/2);
+        if (frames % 1000 === 0) {
+            this.y = (this.y + this.dy) % (this.h/2);
+            this.dy += .5;
+        }
     }
 
 }
