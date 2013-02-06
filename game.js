@@ -398,16 +398,12 @@ const bg = {
     
     draw() {
         // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 510, this.h);
-        ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 690, this.h);
+        ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y - this.h/2 , 690, this.h);
 
     },
 
     update() {
-
-        if (frames % 10 === 0 ) {
-            this.y = (this.y + this.dy) % (this.w);
-        }
-
+        this.y = (this.y + this.dy) % (this.h/2);
     }
 
 }
@@ -419,7 +415,7 @@ const fg = {
     h : 48,
     x : 0,
     y : cvs.height - 48,
-    dy: 1, 
+    dy: .2, 
 
     draw() {
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w + 48, this.h);
