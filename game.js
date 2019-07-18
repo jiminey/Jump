@@ -3,7 +3,8 @@ const ctx = cvs.getContext('2d');
 
 
 
-let frames = 0; 
+let frames = 0;
+let platforms = []; 
 
 const sprite = new Image(); 
 sprite.src = "src/assets/tileset.png"
@@ -47,11 +48,14 @@ function keyUp(evt){
 
 
 function update() {
-    ctx.fillStyle="black";
-    ctx.fillRect();
-    for( let i = 0; i < 50; i++ ){
-        plat[i]
+    ctx.fillStyle = "black";
+    ctx.fillRect(0,0, cvs.width, cvs.height);
+    ctx.fillStyle = "white";
+    ctx.fillRect(chara.x - 5, chara.y - 20, 10, 20);
+    for (let i = 0; i < 30; i++) {
+        platforms[i];
     }
+    
 }
 
 
