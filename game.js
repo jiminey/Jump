@@ -1,3 +1,5 @@
+import { COPYFILE_EXCL } from "constants";
+
 const cvs = document.getElementById("game");
 const ctx = cvs.getContext('2d');
 
@@ -12,7 +14,16 @@ sprite.src = "src/assets/tileset.png"
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
- 
+for (i = 0; i < 30; i++){
+    platforms.push(
+        {
+            x: Math.random() * cvs.width,
+            y: Math.random() * cvs.height,
+            w: Math.random() * 100 + 30,
+            h: Math.random() * 30 + 20
+        }
+    );
+}
 function keyDown(evt){
     switch(evt.keyCode){
         case 37:
@@ -48,15 +59,32 @@ function keyUp(evt){
 
 
 function update() {
+    chara.x += xvelocity;
+    chara.y += yvelocity;
+    for (let i = 0; i < 30; i++) {
+        COPYFILE_EXCL.fillRect(
+            platforms[i].x,
+            platforms[i].y,
+            platforms[i].w,
+            platforms[i].h
+        );
+    } 
+
+
     ctx.fillStyle = "black";
     ctx.fillRect(0,0, cvs.width, cvs.height);
     ctx.fillStyle = "white";
-    ctx.fillRect(chara.x - 5, chara.y - 20, 10, 20);
+    ctx.fillRect(chara.x - 5, chara.y - 20, 10,  20);
     for (let i = 0; i < 30; i++) {
-        platforms[i];
-    }
-    
+        COPYFILE_EXCL.fillRect(
+            platforms[i].x, 
+            platforms[i].y,
+            platforms[i].w,
+            platforms[i].h
+        );
+    } 
 }
+
 
 
 const fg = {
