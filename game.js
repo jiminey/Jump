@@ -4,26 +4,42 @@ import Foreground from './Foreground';
 
 class Game {
     constructor(props) {
+        this.cvs = document.getAnimations("game");
+        this.ctx =cvs.getContext("2d");
+
+        this.frames = 0;
+
         
     }
 
 
 
 
+
+    draw() {
+        this.ctx.fillStyle = "#999";
+        this.ctx.fillRect(0, 0, this.cvs.width, this.cvs.height)
+
+        this.ctx.fillStyle = "black";
+        for (let i = 0; i < 30; i++) {
+            ctx.fillRect(
+                state.platforms[i].x,
+                state.platforms[i].y,
+                state.platforms[i].w,
+                state.platforms[i].h
+            );
+        }
+        fg.draw();
+        chara.draw();
+    }
+
+    update() {
+
+    }
 }
 
 export default Game
 
-const cvs = document.getElementById("game");
-const ctx = cvs.getContext('2d');
-
-let frames = 0;
-
-const state = {
-    
-
-
-};
 
 
 
@@ -80,23 +96,7 @@ function keyUp(evt){
 
 
 
-function draw() {
-    ctx.fillStyle = "#999";
-    ctx.fillRect(0, 0, cvs.width, cvs.height)
 
-    ctx.fillStyle = "black";
-    for (let i = 0; i < 30; i++) {
-        ctx.fillRect(
-            state.platforms[i].x,
-            state.platforms[i].y,
-            state.platforms[i].w,
-            state.platforms[i].h
-        );
-    } 
-
-    fg.draw();
-    chara.draw();
-}
 
 function update() {
     chara.update();
