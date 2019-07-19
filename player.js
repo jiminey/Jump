@@ -45,12 +45,12 @@ class Player {
         this.onGround = false;
 
         for (let i = 0; i < 30; i++) {
-            if (this.x > state.platforms[i].x &&
-                this.x < state.platforms[i].x + state.platforms[i].w &&
-                this.y > state.platforms[i].y &&
-                this.y < state.platforms[i].y + state.platforms[i].h
+            if (this.x > this.platforms[i].x &&
+                this.x < this.platforms[i].x + this.platforms[i].w &&
+                this.y > this.platforms[i].y &&
+                this.y < this.platforms[i].y + this.platforms[i].h
                 ){
-                this.y = state.platforms[i].y;
+                this.y = this.platforms[i].y;
                 this.onGround = true;
                 }
             }

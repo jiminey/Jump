@@ -9,11 +9,24 @@ const ctx = cvs.getContext("2d");
 let frames = 0;
 let platforms = []; 
 
-let player = new Player(); 
-let fg = new Foreground();
+let player = new Player(cvs, ctx, platforms); 
+let fg = new Foreground(cvx, ctx);
 
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
+
+for (i = 0; i < 10; i++) {
+    platforms.push(
+        {
+            x: Math.random() * cvs.width,
+            y: Math.random() * cvs.height,
+            w: Math.random() * 80 + 30,
+            h: Math.random() * 30 + 20
+        }
+    );
+} //generate platforms
+
+
 
 function keyDown(evt){
     switch(evt.keyCode){
@@ -67,16 +80,7 @@ function draw() {
 
 
 function update() {
-    for (i = 0; i < 10; i++) {
-        state.platforms.push(
-            {
-                x: Math.random() * cvs.width,
-                y: Math.random() * cvs.height,
-                w: Math.random() * 80 + 30,
-                h: Math.random() * 30 + 20
-            }
-        );
-    }
+    
 }
 
 
