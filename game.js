@@ -10,23 +10,46 @@ sprite.src = "src/assets/tileset.png";
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
-for (i = 0; i < 30; i++) {
-    platforms.push(
-        {
-            x: Math.random() * cvs.width,
-            y: Math.random() * cvs.height,
-            w: Math.random() * 80 + 30,
-            h: Math.random() * 30 + 20
+ //generate platforms
+
+const platform = {
+    dy: 2, 
+
+    draw : function() {
+        for (let i = 0; i < platforms.length; i++) {
+            ctx.fillRect(platforms[i].x, platforms[i].y, platforms[i].w, platforms[i].h)
+        } 
+        
+    },
+
+    update : function() {
+        if (frames % 50 == 0) {
+            platforms.push(
+                {
+                    x: Math.random() * cvs.width,
+                    y: 100,
+                    w: 120,
+                    h: 10
+                }
+            );
         }
-    );
-} //generate platforms
+        
+
+        for (let i = 0; i < platforms.length; i++) {
+            let p = platforms[i];
+            p.y += this.dy;
+        }
+
+    } 
+}
+
 
 const player = {
     sX : 175,
     sY : 150,
-    w : 17,
+    w : 25,
     h : 25,
-    x : 200,
+    x : 100,
     y : 200,
 
     xvelocity : 0,
@@ -35,14 +58,15 @@ const player = {
     holdLeft : false,
     holdRight : false,
     gravity : 0.5,
+    jumpCount : 2, 
 
     draw : function() {
-        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w * 2, this.h * 2)
+        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x - 5, this.y - this.h*2, this.w*2, this.h*2)
     },
 
     update : function() {
-        if (this.holdLeft) this.xvelocity = -2;
-        if (this.holdRight) this.xvelocity = 2;
+        if (this.holdLeft) this.xvelocity = -4;
+        if (this.holdRight) this.xvelocity = 4;
 
         this.x += this.xvelocity;
         this.y += this.yvelocity;
@@ -55,17 +79,31 @@ const player = {
 
         this.onGround = false;
 
-        for (let i = 0; i < 30; i++) {
-            if (this.x > platforms[i].x &&
-                
-                this.x < platforms[i].x + platforms[i].w &&
-                this.y > platforms[i].y &&
-                this.y < platforms[i].y + platforms[i].h
+        //platform collision
+        
+        for (let i = 0; i < platforms.length; i++) {
+            if (this.x >= platforms[i].x &&
+                this.x <= platforms[i].x + platforms[i].w &&
+                this.y >= platforms[i].y &&
+                this.y <= platforms[i].y + platforms[i].h
             ) {
-                this.y = platforms[i].y;
+                this.jumpCount = 2;
+                this.y = platforms[i].y ;
                 this.onGround = true;
             }
+        }  
+
+        //ground collision
+
+        if (this.y >= cvs.height - fg.h ) {
+            this.jumpCount = 2;
+            this.y = cvs.height - fg.h ;
+            this.onGround = true; 
         }
+
+        //outof screen logic
+        if (this.x < 0) this.x = cvs.width; 
+        if (this.x > cvs.width) this.x = 0;
     } 
 }
 
@@ -91,8 +129,9 @@ function keyDown(evt){
             player.holdLeft = true
             break; 
         case 38:
-            if (player.onGround) {
+            if (player.jumpCount > 0) {
                 player.yvelocity = -10;
+                player.jumpCount -= 1;
             }
             break;
         case 39:
@@ -123,14 +162,7 @@ function draw() {
     ctx.fillRect(0, 0, cvs.width, cvs.height);
     ctx.fillStyle = "black";
 
-    for (let i = 0; i < 30; i++) {
-        ctx.fillRect(
-            platforms[i].x,
-            platforms[i].y,
-            platforms[i].w,
-            platforms[i].h
-        );
-    }
+    platform.draw();
     fg.draw();
     player.draw();
 }
@@ -138,6 +170,7 @@ function draw() {
 
 function update() {
     player.update();
+    platform.update();
     
 }
 
