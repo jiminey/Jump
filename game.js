@@ -3,30 +3,32 @@ import Foreground from './Foreground';
 
 
 class Game {
-    constructor(props) {
+    constructor() {
         this.cvs = document.getAnimations("game");
         this.ctx =cvs.getContext("2d");
 
         this.frames = 0;
-
+        this.platforms = []; 
         
     }
 
 
+    generatePlatforms() { 
 
+    }
 
 
     draw() {
         this.ctx.fillStyle = "#999";
         this.ctx.fillRect(0, 0, this.cvs.width, this.cvs.height)
-
         this.ctx.fillStyle = "black";
+
         for (let i = 0; i < 30; i++) {
-            ctx.fillRect(
-                state.platforms[i].x,
-                state.platforms[i].y,
-                state.platforms[i].w,
-                state.platforms[i].h
+            this.ctx.fillRect(
+                this.platforms[i].x,
+                this.platforms[i].y,
+                this.platforms[i].w,
+                this.platforms[i].h
             );
         }
         fg.draw();
@@ -46,16 +48,6 @@ export default Game
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
-for (i = 0; i < 30; i++){
-    state.platforms.push(
-        {
-            x: Math.random() * cvs.width,
-            y: Math.random() * cvs.height,
-            w: Math.random() * 80 + 30,
-            h: Math.random() * 30 + 20
-        }
-    );
-}
 function keyDown(evt){
     switch(evt.keyCode){
         case 37:
