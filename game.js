@@ -2,7 +2,17 @@ import Player from './Player';
 import Foreground from './Foreground';
 
 
+class Game {
+    constructor(props) {
+        
+    }
 
+
+
+
+}
+
+export default Game
 
 const cvs = document.getElementById("game");
 const ctx = cvs.getContext('2d');
@@ -10,7 +20,7 @@ const ctx = cvs.getContext('2d');
 let frames = 0;
 
 const state = {
-    platforms: [],
+    
 
 
 };
