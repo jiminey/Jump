@@ -1,25 +1,25 @@
-import { COPYFILE_EXCL } from "constants";
-
 const cvs = document.getElementById("game");
 const ctx = cvs.getContext('2d');
 
-
-
 let frames = 0;
-let platforms = []; 
 
-const sprite = new Image(); 
-sprite.src = "src/assets/tileset.png"
+const state = {
+    platforms: [],
+
+
+};
+
+
 
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
 for (i = 0; i < 30; i++){
-    platforms.push(
+    state.platforms.push(
         {
             x: Math.random() * cvs.width,
             y: Math.random() * cvs.height,
-            w: Math.random() * 100 + 30,
+            w: Math.random() * 80 + 30,
             h: Math.random() * 30 + 20
         }
     );
@@ -58,32 +58,6 @@ function keyUp(evt){
 }
 
 
-function update() {
-    chara.x += xvelocity;
-    chara.y += yvelocity;
-    for (let i = 0; i < 30; i++) {
-        COPYFILE_EXCL.fillRect(
-            platforms[i].x,
-            platforms[i].y,
-            platforms[i].w,
-            platforms[i].h
-        );
-    } 
-
-
-    ctx.fillStyle = "black";
-    ctx.fillRect(0,0, cvs.width, cvs.height);
-    ctx.fillStyle = "white";
-    ctx.fillRect(chara.x - 5, chara.y - 20, 10,  20);
-    for (let i = 0; i < 30; i++) {
-        COPYFILE_EXCL.fillRect(
-            platforms[i].x, 
-            platforms[i].y,
-            platforms[i].w,
-            platforms[i].h
-        );
-    } 
-}
 
 
 
@@ -103,74 +77,23 @@ const fg = {
     }
 }
 
-const chara = {
-    sX: 175,
-    sY: 150,
-    w: 17,
-    h: 25,
-    x: 250,
-    y: cvs.height - fg.h - 48,
-
-    xvelocity: 0,
-    yvelocity: 0, 
-    onGround: false,
-    holdLeft: false,
-    holdRight: false,
-
-    
-    draw : function() {
-        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w * 2, this.h * 2 )
-    },
-
-    update : function() {
-            
-           
-            
-
-            this.speed += this.gravity; //fall faster the higher you fall
-
-            if (this.holdLeft) {
-                this.xvelocity = -2;
-            }
-
-            if (this.holdRight) {
-                this.xvelocity = 2 
-            }
-
-            this.x += this.xvelocity;
-            this.y += this.yvelocity; 
-
-            if (this.onGround){
-
-                this.xvelocity *= 0.78;
-            } else {
-
-            }
-
-            //ground logic 
-            if (this.y >= cvs.height - fg.h - 48) {
-                this.y = cvs.height - fg.h - 48; //stays on ground 
-                this.speed = 0; 
-                this.jump_counter = 2; //reset jump counter
-            }
-
-            //air logic
-            // if (this.y < cvs.height - fg.h) {
-            //     this.y += this.speed; // this changes y position, gravity
-            // }
-
-
-    }
-
-}
-
 
 
 
 
 function draw() {
-    ctx.fillStyle = "#ccc";
+    ctx.fillStyle = "#999";
     ctx.fillRect(0, 0, cvs.width, cvs.height)
+
+    ctx.fillStyle = "black";
+    for (let i = 0; i < 30; i++) {
+        ctx.fillRect(
+            state.platforms[i].x,
+            state.platforms[i].y,
+            state.platforms[i].w,
+            state.platforms[i].h
+        );
+    } 
 
     fg.draw();
     chara.draw();
