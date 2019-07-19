@@ -2,48 +2,15 @@ import Player from './Player';
 import Foreground from './Foreground';
 
 
-class Game {
-    constructor() {
-        this.cvs = document.getAnimations("game");
-        this.ctx =cvs.getContext("2d");
 
-        this.frames = 0;
-        this.platforms = []; 
-        
-    }
+const cvs = document.getAnimations("game");
+const ctx = cvs.getContext("2d");
 
+let frames = 0;
+let platforms = []; 
 
-    generatePlatforms() { 
-
-    }
-
-
-    draw() {
-        this.ctx.fillStyle = "#999";
-        this.ctx.fillRect(0, 0, this.cvs.width, this.cvs.height)
-        this.ctx.fillStyle = "black";
-
-        for (let i = 0; i < 30; i++) {
-            this.ctx.fillRect(
-                this.platforms[i].x,
-                this.platforms[i].y,
-                this.platforms[i].w,
-                this.platforms[i].h
-            );
-        }
-        fg.draw();
-        chara.draw();
-    }
-
-    update() {
-
-    }
-}
-
-export default Game
-
-
-
+let player = new Player(); 
+let fg = new Foreground();
 
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
@@ -51,15 +18,15 @@ document.addEventListener("keyup", keyUp);
 function keyDown(evt){
     switch(evt.keyCode){
         case 37:
-            chara.holdLeft = true;
+            player.holdLeft = true;
             break; 
         case 38:
-            if (chara.onGround) {
-                chara.yvelocity = -10;
+            if (player.onGround) {
+                player.yvelocity = -10;
             }
             break;
         case 39:
-            chara.holdRight = true; 
+            player.holdRight = true; 
             break;
     }
 }
@@ -67,31 +34,49 @@ function keyDown(evt){
 function keyUp(evt){
     switch (evt.keyCode) {
         case 37:
-            chara.holdLeft = false;
+            player.holdLeft = false;
             break;
         case 38:
             // caps jump height
-            if (chara.yvelocity < -3) {
-                chara.yvelocity = -3;
+            if (player.yvelocity < -3) {
+                player.yvelocity = -3;
             }
             break;
         case 39:
-            chara.holdRight = false; 
+            player.holdRight = false; 
             break;
     }
 }
 
+function draw() {
+    ctx.fillStyle = "#999";
+    ctx.fillRect(0, 0, cvs.width, cvs.height);
+    ctx.fillStyle = "black";
 
-
-
-
-
-
-
+    for (let i = 0; i < 30; i++) {
+        ctx.fillRect(
+            platforms[i].x,
+            platforms[i].y,
+            platforms[i].w,
+            platforms[i].h
+        );
+    }
+    fg.draw();
+    player.draw();
+}
 
 
 function update() {
-    chara.update();
+    for (i = 0; i < 10; i++) {
+        state.platforms.push(
+            {
+                x: Math.random() * cvs.width,
+                y: Math.random() * cvs.height,
+                w: Math.random() * 80 + 30,
+                h: Math.random() * 30 + 20
+            }
+        );
+    }
 }
 
 
