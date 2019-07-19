@@ -2,9 +2,10 @@ import sprite from '../src/assets/tileset.png';
 
 class Player {
 
-    constructor(canvas, context) {
+    constructor(canvas, context, platforms) {
         this.cvs = canvas, 
         this.ctx = context,
+        this.platforms = platforms,
 
         this.sX = 175,
         this.sY = 150,
@@ -29,35 +30,31 @@ class Player {
     }
 
     update() {
+        if (this.holdLeft) this.xvelocity = -2;
+        if (this.holdRight) this.xvelocity = 2;
+        
+        this.x += this.xvelocity;
+        this.y += this.yvelocity;
 
-    if (this.holdLeft) {
-        this.xvelocity = -2;
-    }
+        if (this.onGround) {
+            this.xvelocity *= 0.78; //friction on ground
+        } else {
+            this.yvelocity += this.gravity; //falling speed
+        }
 
-    if (this.holdRight) {
-        this.xvelocity = 2
-    }
+        this.onGround = false;
 
-    this.x += this.xvelocity;
-    this.y += this.yvelocity;
+        for (let i = 0; i < 30; i++) {
+            if (this.x > state.platforms[i].x &&
+                this.x < state.platforms[i].x + state.platforms[i].w &&
+                this.y > state.platforms[i].y &&
+                this.y < state.platforms[i].y + state.platforms[i].h) {
 
-    if (this.onGround) {
-        this.xvelocity *= 0.78;
-    } else {
-        this.yvelocity += this.gravity;
-    }
-
-    this.onGround = false;
-
-    for (let i = 0; i < 30; i++) {
-        if (this.x > state.platforms[i].x &&
-            this.x < state.platforms[i].x + state.platforms[i].w &&
-            this.y > state.platforms[i].y &&
-            this.y < state.platforms[i].y + state.platforms[i].h) {
-
-            this.y = state.platforms[i].y;
-            chara.onGround = true;
+                this.y = state.platforms[i].y;
+                this.onGround = true;
+                }
             }
         }
-    }
 }
+
+export default Player
