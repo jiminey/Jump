@@ -1,5 +1,5 @@
 import Player from './Player';
-import Forground from './Foreground';
+import Foreground from './Foreground';
 
 
 
