@@ -1,3 +1,9 @@
+import Player from './Player';
+import Forground from './Foreground';
+
+
+
+
 const cvs = document.getElementById("game");
 const ctx = cvs.getContext('2d');
 
@@ -59,23 +65,6 @@ function keyUp(evt){
 
 
 
-
-
-const fg = {
-    sX : 18,
-    sY : 96,
-    w : 220,
-    h : 48,
-    x : 0,
-    y : cvs.height - 48, 
-
-    draw : function() {
-        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w + 48, this.h)
-        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + this.w +48, this.y, this.w + 48, this.h)
-        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x + this.w + 48 + this.w + 48, this.y, this.w + 48, this.h)
-
-    }
-}
 
 
 

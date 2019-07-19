@@ -40,7 +40,7 @@ class Player {
             this.xvelocity *= 0.78; //friction on ground
         } else {
             this.yvelocity += this.gravity; //falling speed
-        }
+          }
 
         this.onGround = false;
 
@@ -48,8 +48,8 @@ class Player {
             if (this.x > state.platforms[i].x &&
                 this.x < state.platforms[i].x + state.platforms[i].w &&
                 this.y > state.platforms[i].y &&
-                this.y < state.platforms[i].y + state.platforms[i].h) {
-
+                this.y < state.platforms[i].y + state.platforms[i].h
+                ){
                 this.y = state.platforms[i].y;
                 this.onGround = true;
                 }
