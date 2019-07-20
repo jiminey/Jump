@@ -107,23 +107,28 @@ const player = {
 
             if (this.x + this.w + this.xvelocity > p.x &&
                 this.x + this.w + this.xvelocity < p.x + p.w &&
-                this.y > p.y &&
-                this.y < p.y + p.h && this.holdRight) {
-                    this.xvelocity *= 0;
+                this.y - this.yvelocity > p.y &&
+                this.y + this.yvelocity < p.y + p.h && this.holdRight) {
+                    this.xvelocity *= 0
                     this.x = p.x - this.w - this.xvelocity;
-                    this.yvelocity *= .8
+
                 } 
 
             if (this.x - this.xvelocity > p.x &&
                 this.x - this.xvelocity < p.x + p.w &&
-                this.y > p.y &&
-                this.y < p.y + p.h && this.holdLeft) {
-                    this.xvelocity *= 0;
-                    this.x = p.x + p.w + this.xvelocity - 2 ; 
-                    this.yvelocity *= .8
+                this.y - this.yvelocity > p.y &&
+                this.y + this.yvelocity < p.y + p.h && this.holdLeft) {
+                    this.xvelocity *= 0
+                    this.x = p.x + p.w + this.xvelocity - 2 ;
                 } 
 
-                
+            if (this.y + this.yvelocity > p.y &&
+                this.y + this.yvelocity < p.y + p.h &&
+                this.x + this.w < p.x + p.w &&
+                this.x + this.w > p.x) {
+                    this.y = p.y - this.gravity
+                    this.onGround = true 
+                }
 
                 
         }
