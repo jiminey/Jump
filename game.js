@@ -110,7 +110,8 @@ const player = {
                 this.y > p.y &&
                 this.y < p.y + p.h && this.holdRight) {
                     this.xvelocity *= 0;
-                    this.x = p.x - this.w - this.xvelocity; 
+                    this.x = p.x - this.w - this.xvelocity;
+                    this.yvelocity *= .8
                 } 
 
             if (this.x - this.xvelocity > p.x &&
@@ -118,8 +119,11 @@ const player = {
                 this.y > p.y &&
                 this.y < p.y + p.h && this.holdLeft) {
                     this.xvelocity *= 0;
-                    this.x = p.x + p.w + this.xvelocity ; 
+                    this.x = p.x + p.w + this.xvelocity - 2 ; 
+                    this.yvelocity *= .8
                 } 
+
+                
 
                 
         }
