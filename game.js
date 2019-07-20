@@ -1,3 +1,5 @@
+
+
 const cvs = document.getElementById("game");
 const ctx = cvs.getContext("2d");
 
@@ -23,13 +25,13 @@ const platform = {
     },
 
     update : function() {
-        if (frames % 50 == 0) {
+        if (frames % 100 == 0) {
             platforms.push(
                 {
-                    x: Math.random() * cvs.width,
+                    x: Math.round(Math.random() * cvs.width *.8) ,
                     y: 100,
-                    w: 120,
-                    h: 10
+                    w: 80,
+                    h: 100
                 }
             );
         }
@@ -38,7 +40,13 @@ const platform = {
         for (let i = 0; i < platforms.length; i++) {
             let p = platforms[i];
             p.y += this.dy;
+
+            
+
+            
         }
+
+        
 
     } 
 }
@@ -49,27 +57,33 @@ const player = {
     sY : 150,
     w : 25,
     h : 25,
-    x : 100,
-    y : 200,
+    x : 50,
+    y : 10,
 
-    xvelocity : 0,
-    yvelocity : 0,
+    xvelocity : 1,
+    yvelocity : 1,
     onGround : false,
     holdLeft : false,
     holdRight : false,
     gravity : 0.5,
     jumpCount : 2, 
+    
 
     draw : function() {
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x - 5, this.y - this.h*2, this.w*2, this.h*2)
     },
 
     update : function() {
-        if (this.holdLeft) this.xvelocity = -4;
-        if (this.holdRight) this.xvelocity = 4;
 
-        this.x += this.xvelocity;
-        this.y += this.yvelocity;
+        // if (this.xvelocity !== 0 && this.yvelocity !== 0) {
+            if (this.holdLeft) this.xvelocity = -4;
+            if (this.holdRight) this.xvelocity = 4;
+        // }
+
+        if (this.xvelocity !== 0 && this.yvelocity !== 0) {
+            this.x += this.xvelocity;
+            this.y += this.yvelocity;
+        }
 
         if (this.onGround) {
             this.xvelocity *= 0.78; //friction on ground
@@ -79,19 +93,36 @@ const player = {
 
         this.onGround = false;
 
-        //platform collision
-        
+        //wall climb
+             
         for (let i = 0; i < platforms.length; i++) {
-            if (this.x >= platforms[i].x &&
-                this.x <= platforms[i].x + platforms[i].w &&
-                this.y >= platforms[i].y &&
-                this.y <= platforms[i].y + platforms[i].h
-            ) {
-                this.jumpCount = 2;
-                this.y = platforms[i].y ;
-                this.onGround = true;
-            }
-        }  
+            let p = platforms[i];
+            
+
+            
+           
+
+
+            //right
+
+            if (this.x + this.w + this.xvelocity > p.x &&
+                this.x + this.w + this.xvelocity < p.x + p.w &&
+                this.y > p.y &&
+                this.y < p.y + p.h && this.holdRight) {
+                    this.xvelocity *= 0;
+                    this.x = p.x - this.w - this.xvelocity; 
+                } 
+
+            if (this.x - this.xvelocity > p.x &&
+                this.x - this.xvelocity < p.x + p.w &&
+                this.y > p.y &&
+                this.y < p.y + p.h && this.holdLeft) {
+                    this.xvelocity *= 0;
+                    this.x = p.x + p.w + this.xvelocity ; 
+                } 
+
+                
+        }
 
         //ground collision
 
@@ -104,7 +135,11 @@ const player = {
         //outof screen logic
         if (this.x < 0) this.x = cvs.width; 
         if (this.x > cvs.width) this.x = 0;
+
+    
+        
     } 
+
 }
 
 const fg = {
