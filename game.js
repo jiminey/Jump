@@ -110,26 +110,44 @@ const player = {
                 this.y - this.yvelocity > p.y &&
                 this.y + this.yvelocity < p.y + p.h && this.holdRight) {
                     this.xvelocity *= 0
-                    this.x = p.x - this.w - this.xvelocity;
+                    this.jumpCount = 1
+                    this.yvelocity *= .88
+                    this.x = p.x - this.w - this.xvelocity
 
                 } 
+            
+            //left
 
             if (this.x - this.xvelocity > p.x &&
                 this.x - this.xvelocity < p.x + p.w &&
                 this.y - this.yvelocity > p.y &&
                 this.y + this.yvelocity < p.y + p.h && this.holdLeft) {
                     this.xvelocity *= 0
+                    this.jumpCount = 1
+                    this.yvelocity *= .88
+
                     this.x = p.x + p.w + this.xvelocity - 2 ;
                 } 
 
-            if (this.y + this.yvelocity > p.y &&
-                this.y + this.yvelocity < p.y + p.h &&
+            //top
+
+            if (this.y + this.h + this.yvelocity > p.y &&
+                this.y + this.h + this.yvelocity < p.y + p.h &&
                 this.x + this.w < p.x + p.w &&
                 this.x + this.w > p.x) {
-                    this.y = p.y - this.gravity
+                    this.jumpCount = 2;
+                    this.y = p.y - this.gravity - 4
                     this.onGround = true 
                 }
 
+            //bottom
+
+            // if (this.y + this.h + this.yvelocity > p.y &&
+            //     this.y + this.yvelocity < p.y + p.h &&
+            //     this.x + this.w < p.x + p.w &&
+            //     this.x + this.w > p.x) {
+            //     this.y = p.y + this.gravity + this.yvelocity
+            // }
                 
         }
 
