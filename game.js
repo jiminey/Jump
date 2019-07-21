@@ -28,9 +28,9 @@ const platform = {
         if (frames % 100 == 0) {
             platforms.push(
                 {
-                    x: Math.round(Math.random() * cvs.width *.8) ,
+                    x: Math.round(Math.random() * cvs.width *.4) ,
                     y: 100,
-                    w: 80,
+                    w: 100,
                     h: 100
                 }
             );
@@ -141,13 +141,14 @@ const player = {
                 }
 
             //bottom
-
-            // if (this.y + this.h + this.yvelocity > p.y &&
-            //     this.y + this.yvelocity < p.y + p.h &&
-            //     this.x + this.w < p.x + p.w &&
-            //     this.x + this.w > p.x) {
-            //     this.y = p.y + this.gravity + this.yvelocity
-            // }
+            if (this.y - this.yvelocity - this.h > p.y &&
+                this.y - this.yvelocity - this.h < p.y + p.h + this.h &&
+                this.x + this.w < p.x + p.w &&
+                this.x + this.w > p.x) {
+                    this.jumpCount = 2;
+                    this.y = p.y + this.h + p.h
+                    this.onGround = true; 
+                }
                 
         }
 
