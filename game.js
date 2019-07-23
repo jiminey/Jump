@@ -11,7 +11,10 @@ rocks = new Image();
 rocks.src = "src/assets/rocks.png";
 
 background = new Image();
-background.src = "src/assets/background.png"
+background.src = "src/assets/background.png";
+
+playersprite = new Image();
+playersprite.src = "src/assets/player.png";
 
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
@@ -69,6 +72,23 @@ const platform = {
 
 
 const player = {
+
+    currentAnimation : [
+        { sX: 0, sY: 9, w: 50, h: 61},
+        { sX: 50, sY: 9, w: 53, h: 60},
+        { sX: 100, sY: 9, w: 47, h: 60},
+    ],
+
+    rightRunningAnimation : [
+        { sX: 0, sY: 12, w: 50, h: 61 },
+        { sX: 49, sY: 18, w: 53, h: 58 },
+        { sX: 102, sY: 14, w: 47, h: 60 }
+    ],
+
+    animationFrame : 0,
+    frameTicks : 0,
+
+
     sX : 175,
     sY : 150,
     w : 25,
@@ -86,10 +106,25 @@ const player = {
     
 
     draw : function() {
-        ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x - 5, this.y - this.h*2, this.w*2, this.h*2)
+        let chara = this.currentAnimation[this.animationFrame];
+        ctx.drawImage(playersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h*2, chara.w*2, chara.h*2)
     },
 
+
     update : function() {
+
+        //if the game state is get ready state, the chara must run slowly
+        this.period = 20;
+
+        // count frames that have elapsed, increment the animationFrame by 1 each period
+        this.frameTicks++;
+        if (this.frameTicks % this.period === 0) {
+            this.frameTicks = 0;
+            this.animationFrame++;
+        }
+
+        //animationFrame goes from 0 to 8, then again to 0
+        this.animationFrame = this.animationFrame % this.currentAnimation.length;
 
         // if (this.xvelocity !== 0 && this.yvelocity !== 0) {
             if (this.holdLeft) this.xvelocity = -4;
