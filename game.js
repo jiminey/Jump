@@ -75,7 +75,10 @@ const player = {
 
     currentAnimation : [
         { sX: 0, sY: 9, w: 50, h: 61},
+        { sX: 0, sY: 9, w: 50, h: 61},
         { sX: 50, sY: 9, w: 53, h: 63},
+        { sX: 50, sY: 9, w: 53, h: 63},
+        { sX: 100, sY: 9, w: 47, h: 60},
         { sX: 100, sY: 9, w: 47, h: 60},
     ],
 
@@ -92,11 +95,25 @@ const player = {
 
     rightClimbingAnimation : [
         { sX: 53, sY: 561, w: 33, h: 65 },
+        { sX: 53, sY: 561, w: 33, h: 65 },
         { sX: 95, sY: 569, w: 28, h: 57 },
         { sX: 133, sY: 555, w: 32, h: 72 },
         { sX: 166, sY: 569, w: 31, h: 56 },
         { sX: 207, sY: 572, w: 30, h: 53 },
         { sX: 244, sY: 557, w: 35, h: 68 },
+        { sX: 244, sY: 557, w: 35, h: 68 },
+
+    ],
+
+    jumpingAnimation : [
+        { sX: 5, sY: 366, w: 57, h: 68 },
+        { sX: 5, sY: 366, w: 57, h: 68 },
+        { sX: 68, sY: 386, w: 63, h: 56 },
+        { sX: 68, sY: 386, w: 63, h: 56 },
+        { sX: 134, sY: 372, w: 57, h: 63 },
+        { sX: 134, sY: 372, w: 57, h: 63 },
+        { sX: 190, sY: 390, w: 64, h: 42 },
+        { sX: 190, sY: 390, w: 64, h: 42 },
 
     ],
 
@@ -129,7 +146,7 @@ const player = {
     update : function() {
 
         //if the game state is get ready state, the chara must run slowly
-        this.period = 20;
+        this.period = 5;
 
         // count frames that have elapsed, increment the animationFrame by 1 each period
         this.frameTicks++;
@@ -179,6 +196,7 @@ const player = {
                     this.jumpCount = 1
                     this.yvelocity *= .88
                     this.x = p.x - this.w - this.xvelocity
+                    this.currentAnimation = this.rightClimbingAnimation;
 
                 } 
             
@@ -286,6 +304,7 @@ function keyDown(evt){
             if (player.jumpCount > 0) {
                 player.yvelocity = -8;
                 player.jumpCount -= 1;
+                player.currentAnimation = player.jumpingAnimation;
             }
             break;
         case 39:
