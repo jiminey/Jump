@@ -76,6 +76,8 @@ const player = {
     currentAnimation : [
         { sX: 0, sY: 9, w: 50, h: 61},
         { sX: 0, sY: 9, w: 50, h: 61},
+        { sX: 0, sY: 9, w: 50, h: 61},
+        { sX: 50, sY: 9, w: 53, h: 63},
         { sX: 50, sY: 9, w: 53, h: 63},
         { sX: 50, sY: 9, w: 53, h: 63},
         { sX: 100, sY: 9, w: 47, h: 60},
@@ -85,6 +87,8 @@ const player = {
     idleAnimation : [
         { sX: 0, sY: 9, w: 50, h: 61},
         { sX: 0, sY: 9, w: 50, h: 61},
+        { sX: 0, sY: 9, w: 50, h: 61},
+        { sX: 50, sY: 9, w: 53, h: 63},
         { sX: 50, sY: 9, w: 53, h: 63},
         { sX: 50, sY: 9, w: 53, h: 63},
         { sX: 100, sY: 9, w: 47, h: 60},
@@ -123,6 +127,19 @@ const player = {
         { sX: 134, sY: 372, w: 57, h: 63 },
         { sX: 190, sY: 390, w: 64, h: 42 },
         { sX: 190, sY: 390, w: 64, h: 42 },
+
+    ],
+
+    topAnimation : [
+        { sX: 75, sY: 549, w: 70, h: 34 },
+        { sX: 75, sY: 549, w: 70, h: 34 },
+        { sX: 83, sY: 517, w: 90, h: 31 },
+        { sX: 183, sY: 514, w:72, h: 34 },
+        { sX: 258, sY: 520, w: 69, h: 24 },
+        { sX: 232, sY: 515, w: 90, h: 31 },
+        { sX: 428, sY: 516, w: 77, h: 30 },
+        { sX: 428, sY: 516, w: 77, h: 30 },
+
 
     ],
 
@@ -231,7 +248,7 @@ const player = {
                     this.jumpCount = 2;
                     this.y = p.y - this.gravity - 4
                     this.onGround = true 
-                    this.currentAnimation = this.idleAnimation;
+                    this.currentAnimation = this.topAnimation;
 
                 }
 
