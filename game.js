@@ -75,14 +75,29 @@ const player = {
 
     currentAnimation : [
         { sX: 0, sY: 9, w: 50, h: 61},
-        { sX: 50, sY: 9, w: 53, h: 60},
+        { sX: 50, sY: 9, w: 53, h: 63},
         { sX: 100, sY: 9, w: 47, h: 60},
     ],
 
     rightRunningAnimation : [
-        { sX: 0, sY: 12, w: 50, h: 61 },
-        { sX: 49, sY: 18, w: 53, h: 58 },
-        { sX: 102, sY: 14, w: 47, h: 60 }
+        { sX: 8, sY: 83, w: 45, h: 59 },
+        { sX: 62, sY: 83, w: 38, h: 59 },
+        { sX: 104, sY: 83, w: 45, h: 59 },
+        { sX: 156, sY: 83, w: 63, h: 59 },
+        { sX: 223, sY: 83, w: 65, h: 59 },
+        { sX: 294, sY: 83, w: 53, h: 59 },
+        { sX: 350, sY: 83, w: 42, h: 59 },
+        { sX: 400, sY: 83, w: 37, h: 59 },
+    ],
+
+    rightClimbingAnimation : [
+        { sX: 53, sY: 561, w: 33, h: 65 },
+        { sX: 95, sY: 569, w: 28, h: 57 },
+        { sX: 133, sY: 555, w: 32, h: 72 },
+        { sX: 166, sY: 569, w: 31, h: 56 },
+        { sX: 207, sY: 572, w: 30, h: 53 },
+        { sX: 244, sY: 557, w: 35, h: 68 },
+
     ],
 
     animationFrame : 0,
@@ -107,7 +122,7 @@ const player = {
 
     draw : function() {
         let chara = this.currentAnimation[this.animationFrame];
-        ctx.drawImage(playersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h*2, chara.w*2, chara.h*2)
+        ctx.drawImage(playersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h*2, chara.w, chara.h)
     },
 
 
@@ -275,6 +290,7 @@ function keyDown(evt){
             break;
         case 39:
             player.holdRight = true; 
+            player.currentAnimation = player.rightRunningAnimation;
             break;
     }
 }
