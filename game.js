@@ -82,6 +82,15 @@ const player = {
         { sX: 100, sY: 9, w: 47, h: 60},
     ],
 
+    idleAnimation : [
+        { sX: 0, sY: 9, w: 50, h: 61},
+        { sX: 0, sY: 9, w: 50, h: 61},
+        { sX: 50, sY: 9, w: 53, h: 63},
+        { sX: 50, sY: 9, w: 53, h: 63},
+        { sX: 100, sY: 9, w: 47, h: 60},
+        { sX: 100, sY: 9, w: 47, h: 60},
+    ],
+
     rightRunningAnimation : [
         { sX: 8, sY: 83, w: 45, h: 59 },
         { sX: 62, sY: 83, w: 38, h: 59 },
@@ -146,7 +155,7 @@ const player = {
     update : function() {
 
         //if the game state is get ready state, the chara must run slowly
-        this.period = 5;
+        this.period = 10;
 
         // count frames that have elapsed, increment the animationFrame by 1 each period
         this.frameTicks++;
@@ -222,6 +231,8 @@ const player = {
                     this.jumpCount = 2;
                     this.y = p.y - this.gravity - 4
                     this.onGround = true 
+                    this.currentAnimation = this.idleAnimation;
+
                 }
 
             //bottom
