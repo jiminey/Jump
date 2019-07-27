@@ -33,7 +33,7 @@ const platform = {
     y: cvs.height - 48,
 
 
-    dy: 2, 
+    dy: 5, 
 
     draw : function() {
         for (let i = 0; i < platforms.length; i++) {
@@ -52,8 +52,8 @@ const platform = {
                 {
                     x: Math.round(Math.random() * cvs.width) ,
                     y: 0,
-                    w: 34,
-                    h: 32
+                    w: Math.round(Math.random()* 10 + 30),
+                    h: Math.round(Math.random() * 40 + 30),
                 }
             );
         }
@@ -193,6 +193,29 @@ const player = {
         { sX: 45, sY: 518, w: 76, h: 27 },
     ],
 
+    leftBottomAnimation : [
+        { sX: 339, sY: 465, w: 46, h: 40 },
+        { sX: 339, sY: 465, w: 46, h: 40 },
+        { sX: 339, sY: 465, w: 46, h: 40 },
+        { sX: 339, sY: 465, w: 46, h: 40 },
+        { sX: 339, sY: 465, w: 46, h: 40 },
+        { sX: 339, sY: 465, w: 46, h: 40 },
+        { sX: 339, sY: 465, w: 46, h: 40 },
+        { sX: 339, sY: 465, w: 46, h: 40 },
+    ],
+
+    rightBottomAnimation : [
+        { sX: 165, sY: 465, w: 47, h: 40 },
+        { sX: 165, sY: 465, w: 47, h: 40 },
+        { sX: 165, sY: 465, w: 47, h: 40 },
+        { sX: 165, sY: 465, w: 47, h: 40 },
+        { sX: 165, sY: 465, w: 47, h: 40 },
+        { sX: 165, sY: 465, w: 47, h: 40 },
+        { sX: 165, sY: 465, w: 47, h: 40 },
+        { sX: 165, sY: 465, w: 47, h: 40 },
+        
+    ],
+
 
 
     animationFrame : 0,
@@ -211,7 +234,7 @@ const player = {
     onGround : false,
     holdLeft : false,
     holdRight : false,
-    gravity : 0.5,
+    gravity : 0.3,
     jumpCount : 2,
 
     left : true, 
@@ -292,7 +315,6 @@ const player = {
                     this.yvelocity *= .88
                     this.x = p.x - this.w - this.xvelocity
                     this.currentAnimation = this.rightClimbingAnimation;
-
                 } 
             
             //left
@@ -333,6 +355,11 @@ const player = {
                     this.jumpCount = 2;
                     this.y = p.y + this.h + p.h*2
                     this.onGround = true; 
+                    if (this.right) {
+                        this.currentAnimation = this.rightBottomAnimation;
+                    } else {
+                        this.currentAnimation = this.leftBottomAnimation;
+                    }
                 }
                 
         }
@@ -421,6 +448,7 @@ function keyUp(evt){
     switch (evt.keyCode) {
         case 37:
             player.holdLeft = false;
+
             break;
         case 38:
             // caps jump height
@@ -429,7 +457,7 @@ function keyUp(evt){
             }
             break;
         case 39:
-            player.holdRight = false; 
+            player.holdRight = false;
             break;
     }
 }
