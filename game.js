@@ -62,10 +62,6 @@ const platform = {
         for (let i = 0; i < platforms.length; i++) {
             let p = platforms[i];
             p.y += this.dy;
-
-            
-
-            
         }
 
         
@@ -172,16 +168,32 @@ const player = {
 
     ],
 
-    topAnimation : [
+    rightTopAnimation : [
         { sX: 8, sY: 517, w: 69, h: 34 },
-        { sX: 83, sY: 517, w: 90, h: 31 },
-        { sX: 83, sY: 517, w: 90, h: 31 },
+        { sX: 8, sY: 517, w: 69, h: 34 },
+
         { sX: 180, sY: 514, w:75, h: 30 },
-        { sX: 258, sY: 517, w: 65, h: 30 },
-        { sX: 335, sY: 515, w: 87, h: 32 },
+        { sX: 180, sY: 514, w:75, h: 30 },
+
+        { sX: 262, sY: 518, w: 67, h: 26 },
+        { sX: 262, sY: 518, w: 67, h: 26 },
+
         { sX: 428, sY: 516, w: 77, h: 30 },
         { sX: 428, sY: 516, w: 77, h: 30 },
     ],
+
+    leftTopAnimation : [
+        { sX: 472, sY: 517, w: 74, h: 29 },
+        { sX: 472, sY: 517, w: 74, h: 29 },
+        { sX: 292, sY: 517, w: 76, h: 27 },
+        { sX: 292, sY: 517, w: 76, h: 27 },
+        { sX: 224, sY: 519, w: 66, h: 27 },
+        { sX: 224, sY: 519, w: 66, h: 27 },
+        { sX: 45, sY: 518, w: 76, h: 27 },
+        { sX: 45, sY: 518, w: 76, h: 27 },
+    ],
+
+
 
     animationFrame : 0,
     frameTicks : 0,
@@ -305,7 +317,11 @@ const player = {
                     this.jumpCount = 2;
                     this.y = p.y - this.gravity - 4
                     this.onGround = true 
-                    this.currentAnimation = this.topAnimation;
+                    if (this.right){
+                        this.currentAnimation = this.rightTopAnimation;
+                    } else {
+                        this.currentAnimation = this.leftTopAnimation;
+                    }
 
                 }
 
