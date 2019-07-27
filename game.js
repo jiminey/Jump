@@ -19,6 +19,12 @@ playersprite.src = "src/assets/player.png";
 leftplayersprite = new Image();
 leftplayersprite.src = "src/assets/leftplayer.png"
 
+jumpSound = new Audio();
+jumpSound.src = "src/assets/sfx_flap.wav"
+
+pointSound = new Audio(); 
+pointSound.src = "src/assets/sfx_point.wav"
+
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
@@ -32,18 +38,13 @@ const platform = {
     x: 250,
     y: cvs.height - 48,
 
-
     dy: 5, 
 
     draw : function() {
         for (let i = 0; i < platforms.length; i++) {
-
             ctx.fillRect(platforms[i].x, platforms[i].y, platforms[i].w, platforms[i].h)
             ctx.drawImage(rocks, this.sX, this.sY, this.w, this.h, platforms[i].x, platforms[i].y, platforms[i].w * 2, platforms[i].h * 2)
-
-            
-        } 
-        
+        }    
     },
 
     update : function() {
@@ -57,15 +58,13 @@ const platform = {
                 }
             );
         }
-        
 
+
+        
         for (let i = 0; i < platforms.length; i++) {
             let p = platforms[i];
             p.y += this.dy;
         }
-
-        
-
     } 
 }
 
@@ -93,8 +92,6 @@ const player = {
         { sX: 100, sY: 9, w: 47, h: 60},
         { sX: 100, sY: 9, w: 47, h: 60},
     ],
-    
-    
 
     rightRunningAnimation : [
         { sX: 8, sY: 78, w: 45, h: 59 },
@@ -117,8 +114,6 @@ const player = {
         { sX: 161, sY: 83, w: 41, h: 56 },
         { sX: 114, sY: 81, w: 41, h: 59 },
     ],
-
-    
 
     rightClimbingAnimation : [
         { sX: 53, sY: 561, w: 33, h: 65 },
@@ -234,7 +229,7 @@ const player = {
     onGround : false,
     holdLeft : false,
     holdRight : false,
-    gravity : 0.3,
+    gravity : 0.4,
     jumpCount : 2,
 
     left : true, 
@@ -409,7 +404,7 @@ const fg = {
     h : 48,
     x : 0,
     y : cvs.height - 48,
-    dy: 0.1, 
+    dy: 2, 
 
     draw() {
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w + 48, this.h);
@@ -434,6 +429,7 @@ function keyDown(evt){
             if (player.jumpCount > 0) {
                 player.yvelocity = -8;
                 player.jumpCount -= 1;
+                jumpSound.play(); 
             }
             break;
         case 39:
