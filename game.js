@@ -161,14 +161,14 @@ const player = {
     ],
 
     leftJumpingAnimation : [
-        { sX: 5, sY: 366, w: 57, h: 68 },
-        { sX: 5, sY: 366, w: 57, h: 68 },
-        { sX: 68, sY: 386, w: 63, h: 56 },
-        { sX: 68, sY: 386, w: 63, h: 56 },
-        { sX: 134, sY: 372, w: 57, h: 63 },
-        { sX: 134, sY: 372, w: 57, h: 63 },
-        { sX: 190, sY: 390, w: 64, h: 42 },
-        { sX: 190, sY: 390, w: 64, h: 42 },
+        { sX: 489, sY: 371, w: 53, h: 63 },
+        { sX: 489, sY: 371, w: 53, h: 63 },
+        { sX: 421, sY: 388, w: 64, h: 45 },
+        { sX: 421, sY: 388, w: 64, h: 45 },
+        { sX: 294, sY: 390, w: 63, h: 43 },
+        { sX: 294, sY: 390, w: 63, h: 43 },
+        { sX: 231, sY: 390, w: 65, h: 42 },
+        { sX: 231, sY: 390, w: 65, h: 42 },
 
     ],
 
@@ -219,7 +219,7 @@ const player = {
     update : function() {
 
         //if the game state is get ready state, the chara must run slowly
-        this.period = 50;
+        this.period = 10;
 
         // count frames that have elapsed, increment the animationFrame by 1 each period
         this.frameTicks++;
@@ -243,8 +243,18 @@ const player = {
 
         if (this.onGround) {
             this.xvelocity *= 0.78; //friction on ground
+            if (this.onGround && this.right) {
+                this.currentAnimation = this.rightRunningAnimation;
+            } else {
+                this.currentAnimation = this.leftRunningAnimation;
+            }
         } else {
             this.yvelocity += this.gravity; //falling speed
+            if (this.right) {
+                this.currentAnimation = this.rightJumpingAnimation;
+            } else {
+                this.currentAnimation = this.leftJumpingAnimation;
+            }
         }
 
         this.onGround = false;
@@ -282,10 +292,8 @@ const player = {
                     this.xvelocity *= 0
                     this.jumpCount = 1
                     this.yvelocity *= .88
-                this.currentAnimation = this.leftClimbingAnimation;
-
-
                     this.x = p.x + p.w*2 + this.xvelocity - 2 ;
+                    this.currentAnimation = this.leftClimbingAnimation;
                 } 
 
             //top
@@ -376,7 +384,6 @@ function keyDown(evt){
     switch(evt.keyCode){
         case 37:
             player.holdLeft = true
-            player.currentAnimation = player.leftRunningAnimation;
             player.left = false;
             player.right = false;
             break; 
@@ -384,12 +391,10 @@ function keyDown(evt){
             if (player.jumpCount > 0) {
                 player.yvelocity = -8;
                 player.jumpCount -= 1;
-                player.currentAnimation = player.rightJumpingAnimation;
             }
             break;
         case 39:
-            player.holdRight = true; 
-            player.currentAnimation = player.rightRunningAnimation;
+            player.holdRight = true;
             player.right = true; 
             player.left = false; 
             break;
