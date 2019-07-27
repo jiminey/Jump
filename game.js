@@ -16,6 +16,9 @@ background.src = "src/assets/background.png";
 playersprite = new Image();
 playersprite.src = "src/assets/player.png";
 
+leftplayersprite = new Image();
+leftplayersprite.src = "src/assets/leftplayer.png"
+
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
@@ -30,7 +33,7 @@ const platform = {
     y: cvs.height - 48,
 
 
-    dy: 3, 
+    dy: 2, 
 
     draw : function() {
         for (let i = 0; i < platforms.length; i++) {
@@ -94,17 +97,32 @@ const player = {
         { sX: 100, sY: 9, w: 47, h: 60},
         { sX: 100, sY: 9, w: 47, h: 60},
     ],
+    
+    
 
     rightRunningAnimation : [
-        { sX: 8, sY: 83, w: 45, h: 59 },
-        { sX: 62, sY: 83, w: 38, h: 59 },
-        { sX: 104, sY: 83, w: 45, h: 59 },
-        { sX: 156, sY: 83, w: 63, h: 59 },
-        { sX: 223, sY: 83, w: 65, h: 59 },
-        { sX: 294, sY: 83, w: 53, h: 59 },
-        { sX: 350, sY: 83, w: 42, h: 59 },
-        { sX: 400, sY: 83, w: 37, h: 59 },
+        { sX: 8, sY: 78, w: 45, h: 59 },
+        { sX: 62, sY: 78, w: 38, h: 59 },
+        { sX: 104, sY: 78, w: 45, h: 59 },
+        { sX: 156, sY: 78, w: 63, h: 59 },
+        { sX: 223, sY: 78, w: 65, h: 59 },
+        { sX: 294, sY: 78, w: 53, h: 59 },
+        { sX: 350, sY: 78, w: 42, h: 59 },
+        { sX: 400, sY: 78, w: 37, h: 59 },
     ],
+
+    leftRunningAnimation : [
+        { sX: 497, sY: 81, w: 49, h: 61 },
+        { sX: 446, sY: 82, w: 41, h: 56 },
+        { sX: 400, sY: 80, w: 50, h: 57 },
+        { sX: 332, sY: 82, w: 60, h: 56 },
+        { sX: 260, sY: 80, w: 68, h: 56 },
+        { sX: 205, sY: 80, w: 52, h: 58 },
+        { sX: 161, sY: 83, w: 41, h: 56 },
+        { sX: 114, sY: 81, w: 41, h: 59 },
+    ],
+
+    
 
     rightClimbingAnimation : [
         { sX: 53, sY: 561, w: 33, h: 65 },
@@ -118,7 +136,31 @@ const player = {
 
     ],
 
-    jumpingAnimation : [
+    leftClimbingAnimation : [
+        { sX: 463, sY: 561, w: 35, h: 67 },
+        { sX: 463, sY: 561, w: 35, h: 67 },
+        { sX: 426, sY: 572, w: 31, h: 58 },
+        { sX: 426, sY: 572, w: 31, h: 58 },
+        { sX: 354, sY: 569, w: 31, h: 59 },
+        { sX: 354, sY: 569, w: 31, h: 59 },
+        { sX: 313, sY: 569, w: 33, h: 56 },
+        { sX: 313, sY: 569, w: 33, h: 56 },
+        
+    ],
+
+    rightJumpingAnimation : [
+        { sX: 5, sY: 366, w: 57, h: 68 },
+        { sX: 5, sY: 366, w: 57, h: 68 },
+        { sX: 68, sY: 386, w: 63, h: 56 },
+        { sX: 68, sY: 386, w: 63, h: 56 },
+        { sX: 134, sY: 372, w: 57, h: 63 },
+        { sX: 134, sY: 372, w: 57, h: 63 },
+        { sX: 190, sY: 390, w: 64, h: 42 },
+        { sX: 190, sY: 390, w: 64, h: 42 },
+
+    ],
+
+    leftJumpingAnimation : [
         { sX: 5, sY: 366, w: 57, h: 68 },
         { sX: 5, sY: 366, w: 57, h: 68 },
         { sX: 68, sY: 386, w: 63, h: 56 },
@@ -131,16 +173,14 @@ const player = {
     ],
 
     topAnimation : [
-        { sX: 75, sY: 549, w: 70, h: 34 },
-        { sX: 75, sY: 549, w: 70, h: 34 },
+        { sX: 8, sY: 517, w: 69, h: 34 },
         { sX: 83, sY: 517, w: 90, h: 31 },
-        { sX: 183, sY: 514, w:72, h: 34 },
-        { sX: 258, sY: 520, w: 69, h: 24 },
-        { sX: 232, sY: 515, w: 90, h: 31 },
+        { sX: 83, sY: 517, w: 90, h: 31 },
+        { sX: 180, sY: 514, w:75, h: 30 },
+        { sX: 258, sY: 517, w: 65, h: 30 },
+        { sX: 335, sY: 515, w: 87, h: 32 },
         { sX: 428, sY: 516, w: 77, h: 30 },
         { sX: 428, sY: 516, w: 77, h: 30 },
-
-
     ],
 
     animationFrame : 0,
@@ -160,19 +200,26 @@ const player = {
     holdLeft : false,
     holdRight : false,
     gravity : 0.5,
-    jumpCount : 2, 
+    jumpCount : 2,
+
+    left : true, 
+    right : false, 
     
 
     draw : function() {
         let chara = this.currentAnimation[this.animationFrame];
-        ctx.drawImage(playersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h*2, chara.w, chara.h)
+        if (this.right){
+            ctx.drawImage(playersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h, chara.w/1.4, chara.h/1.4)
+        } else {
+            ctx.drawImage(leftplayersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h, chara.w / 1.4, chara.h / 1.4)
+        }
     },
 
 
     update : function() {
 
         //if the game state is get ready state, the chara must run slowly
-        this.period = 10;
+        this.period = 50;
 
         // count frames that have elapsed, increment the animationFrame by 1 each period
         this.frameTicks++;
@@ -235,6 +282,8 @@ const player = {
                     this.xvelocity *= 0
                     this.jumpCount = 1
                     this.yvelocity *= .88
+                this.currentAnimation = this.leftClimbingAnimation;
+
 
                     this.x = p.x + p.w*2 + this.xvelocity - 2 ;
                 } 
@@ -292,7 +341,7 @@ const bg = {
     dy: 1,
     
     draw() {
-        ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 510, this.h);
+        // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 510, this.h);
 
     },
 
@@ -309,7 +358,7 @@ const fg = {
     h : 48,
     x : 0,
     y : cvs.height - 48,
-    dy: 0.25, 
+    dy: 0.1, 
 
     draw() {
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w + 48, this.h);
@@ -327,17 +376,22 @@ function keyDown(evt){
     switch(evt.keyCode){
         case 37:
             player.holdLeft = true
+            player.currentAnimation = player.leftRunningAnimation;
+            player.left = false;
+            player.right = false;
             break; 
         case 38:
             if (player.jumpCount > 0) {
                 player.yvelocity = -8;
                 player.jumpCount -= 1;
-                player.currentAnimation = player.jumpingAnimation;
+                player.currentAnimation = player.rightJumpingAnimation;
             }
             break;
         case 39:
             player.holdRight = true; 
             player.currentAnimation = player.rightRunningAnimation;
+            player.right = true; 
+            player.left = false; 
             break;
     }
 }
