@@ -11,7 +11,7 @@ rocks = new Image();
 rocks.src = "src/assets/rocks.png";
 
 background = new Image();
-background.src = "src/assets/background.png";
+background.src = "src/assets/background.jpg";
 
 playersprite = new Image();
 playersprite.src = "src/assets/player.png";
@@ -380,14 +380,15 @@ const player = {
 const bg = {
     sX: 146,
     sY: 0,
-    w: 257,
-    h: 800,
+    w: 564,
+    h: 2006,
     x: -10,
     y: -200,
     dy: 1,
     
     draw() {
         // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 510, this.h);
+        ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 690, this.h);
 
     },
 
@@ -404,7 +405,7 @@ const fg = {
     h : 48,
     x : 0,
     y : cvs.height - 48,
-    dy: 2, 
+    dy: 1, 
 
     draw() {
         ctx.drawImage(sprite, this.sX, this.sY, this.w, this.h, this.x, this.y, this.w + 48, this.h);
