@@ -38,7 +38,7 @@ const platform = {
     x: 250,
     y: cvs.height - 48,
 
-    dy: 5, 
+    dy: 2, 
 
     draw : function() {
         for (let i = 0; i < platforms.length; i++) {
@@ -64,7 +64,17 @@ const platform = {
         for (let i = 0; i < platforms.length; i++) {
             let p = platforms[i];
             p.y += this.dy;
+
+            if (platforms[i].y > cvs.y + cvs.height) {
+                platforms.shift();
+                pointSound.play();
+
+            }
+
+
         }
+
+        
     } 
 }
 
@@ -384,7 +394,7 @@ const bg = {
     h: 2006,
     x: -10,
     y: -200,
-    dy: 1,
+    dy: 2,
     
     draw() {
         // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 510, this.h);
@@ -393,7 +403,11 @@ const bg = {
     },
 
     update() {
-        this.y += this.dy
+
+        if (frames % 10 === 0 ) {
+            this.y = (this.y + this.dy) % (this.w);
+        }
+
     }
 
 }
