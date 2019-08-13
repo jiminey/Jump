@@ -2,6 +2,7 @@ const cvs = document.getElementById("game");
 const ctx = cvs.getContext("2d");
 
 let frames = 0;
+let score = 0; 
 let platforms = []; 
 
 sprite = new Image();
