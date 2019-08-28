@@ -4,8 +4,23 @@ body {
 
 .title {
     color: beige;
-    font-size: 40px;
+    font-size: 60px;
     display: flex;
     justify-content: center;
+    margin-top: -5px;
 
+}
+
+.main {
+    display:flex;
+}
+
+.instruction {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    color: white;
+    line-height: 300%;
+    position: relative;
+    left: 110px;
+    top: 50px;
 }

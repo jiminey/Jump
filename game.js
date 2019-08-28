@@ -242,7 +242,7 @@ const player = {
     holdLeft : false,
     holdRight : false,
     gravity : 0.4,
-    jumpCount : 2,
+    jumpCount : 3,
 
     left : true, 
     right : false, 
@@ -316,10 +316,11 @@ const player = {
             if (this.x + this.w + this.xvelocity > p.x &&
                 this.x + this.w + this.xvelocity < p.x + p.w*2 &&
                 this.y - this.yvelocity > p.y &&
-                this.y + this.yvelocity < p.y + p.h*2 && this.holdRight) {
+                this.y + this.yvelocity < p.y + p.h*2) {
                     this.xvelocity *= 0
-                    this.jumpCount = 1
+                    this.jumpCount = 3
                     this.yvelocity *= .88
+                    this.y += this.gravity
                     this.x = p.x - this.w - this.xvelocity
                     this.currentAnimation = this.rightClimbingAnimation;
                 } 
@@ -329,10 +330,11 @@ const player = {
             if (this.x - this.xvelocity > p.x &&
                 this.x - this.xvelocity < p.x + p.w*2 &&
                 this.y - this.yvelocity > p.y &&
-                this.y + this.yvelocity < p.y + p.h*2 && this.holdLeft) {
+                this.y + this.yvelocity < p.y + p.h*2) {
                     this.xvelocity *= 0
-                    this.jumpCount = 1
+                    this.jumpCount = 3
                     this.yvelocity *= .88
+                    this.y += this.gravity
                     this.x = p.x + p.w*2 + this.xvelocity - 2 ;
                     this.currentAnimation = this.leftClimbingAnimation;
                 } 
@@ -343,7 +345,7 @@ const player = {
                 this.y + this.h + this.yvelocity < p.y + p.h*2 &&
                 this.x + this.w < p.x + p.w*2 &&
                 this.x + this.w > p.x) {
-                    this.jumpCount = 2;
+                    this.jumpCount = 3;
                     this.y = p.y - this.gravity - 4
                     this.onGround = true 
                     if (this.right){
@@ -359,7 +361,7 @@ const player = {
                 this.y - this.yvelocity - this.h < p.y + p.h*2 + this.h &&
                 this.x + this.w < p.x + p.w*2 &&
                 this.x + this.w > p.x) {
-                    this.jumpCount = 2;
+                    this.jumpCount = 3;
                     this.y = p.y + this.h + p.h*2
                     this.onGround = true; 
                     if (this.right) {
@@ -374,7 +376,7 @@ const player = {
         //ground collision
 
         if (this.y >= (fg.y)) {
-            this.jumpCount = 2;
+            this.jumpCount = 3;
             this.y = fg.y;
             this.onGround = true; 
         }
@@ -437,15 +439,17 @@ const fg = {
 function keyDown(evt){
     switch(evt.keyCode){
         case 37:
-            player.holdLeft = true
-            player.left = false;
+            player.holdLeft = true;
+            player.left = true;
             player.right = false;
             break; 
         case 38:
             if (player.jumpCount > 0) {
                 player.yvelocity = -8;
                 player.jumpCount -= 1;
+                player.y -= 5;
                 jumpSound.play(); 
+
             }
             break;
         case 39:
@@ -465,6 +469,7 @@ function keyUp(evt){
         case 38:
             // caps jump height
             if (player.yvelocity < -3) {
+                player.y -= 2;
                 player.yvelocity = -3;
             }
             break;
