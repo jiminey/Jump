@@ -5,6 +5,11 @@ let frames = 0;
 let score = 0; 
 let platforms = []; 
 
+let gameState = 0;
+
+gameover = new Image();
+gameover.src = "src/assets/gameover.jpg"
+
 sprite = new Image();
 sprite.src = "src/assets/tileset.png";
 
@@ -49,7 +54,7 @@ const platform = {
     },
 
     update : function() {
-        if (frames % 50 == 0) {
+        if (frames % 50 == 0 && gameState !== 1) {
             platforms.push(
                 {
                     x: Math.round(Math.random() * cvs.width) ,
@@ -67,13 +72,11 @@ const platform = {
             let p = platforms[i];
             p.y += this.dy;
 
-            if (platforms[i].y > cvs.y + cvs.height) {
-                platforms.shift();
+            if (p.y > cvs.height) {
                 pointSound.play();
-
+                platforms.shift();
+                score += 1;
             }
-
-
         }
 
         
@@ -241,8 +244,9 @@ const player = {
     onGround : false,
     holdLeft : false,
     holdRight : false,
-    gravity : 0.4,
+    gravity : .3,
     jumpCount : 3,
+    diff : 0,
 
     left : true, 
     right : false, 
@@ -262,6 +266,7 @@ const player = {
 
         //if the game state is get ready state, the chara must run slowly
         this.period = 10;
+
 
         // count frames that have elapsed, increment the animationFrame by 1 each period
         this.frameTicks++;
@@ -320,7 +325,7 @@ const player = {
                     this.xvelocity *= 0
                     this.jumpCount = 3
                     this.yvelocity *= .88
-                    this.y += this.gravity
+
                     this.x = p.x - this.w - this.xvelocity
                     this.currentAnimation = this.rightClimbingAnimation;
                 } 
@@ -334,7 +339,7 @@ const player = {
                     this.xvelocity *= 0
                     this.jumpCount = 3
                     this.yvelocity *= .88
-                    this.y += this.gravity
+                    // this.y += this.gravity
                     this.x = p.x + p.w*2 + this.xvelocity - 2 ;
                     this.currentAnimation = this.leftClimbingAnimation;
                 } 
@@ -373,6 +378,11 @@ const player = {
                 
         }
 
+
+        if (this.y > cvs.height) {
+            gameState = 1;
+        }
+
         //ground collision
 
         if (this.y >= (fg.y)) {
@@ -384,10 +394,11 @@ const player = {
         //outof screen logic
         if (this.x < 0) this.x = cvs.width; 
         if (this.x > cvs.width) this.x = 0;
-
-    
+        
         
     } 
+
+    
 
 }
 
@@ -402,7 +413,12 @@ const bg = {
     
     draw() {
         // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 510, this.h);
-        ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y - this.h/2 , 690, this.h);
+
+        if (gameState === 0 ) {
+            ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y - this.h/2 , 690, this.h);
+        } else if (gameState === 1 ) {
+                ctx.drawImage(gameover, 0, 0, 650, 650, 0, 0, 550, 700);
+        }
 
     },
 
@@ -480,14 +496,18 @@ function keyUp(evt){
 }
 
 function draw() {
+
     ctx.fillStyle = "#999";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
     ctx.fillStyle = "black";
+
 
     bg.draw();
     platform.draw();
     fg.draw();
     player.draw();
+
+
 
 }
 
