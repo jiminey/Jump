@@ -381,6 +381,9 @@ const player = {
 
         if (this.y > cvs.height) {
             gameState = 1;
+
+            setInterval(function() {document.location.reload()}, 2000)
+
         }
 
         //ground collision
@@ -473,6 +476,9 @@ function keyDown(evt){
             player.right = true; 
             player.left = false; 
             break;
+        case 32:
+            document.location.reload();
+            break;
     }
 }
 
@@ -517,6 +523,7 @@ function update() {
     player.update();
     platform.update();
     fg.update();
+
 }
 
 
