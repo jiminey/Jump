@@ -382,7 +382,8 @@ const player = {
         if (this.y > cvs.height) {
             gameState = 1;
 
-            setInterval(function() {document.location.reload()}, 2000)
+            // setInterval(function() {document.location.reload()}, 2000)
+            
 
         }
 
