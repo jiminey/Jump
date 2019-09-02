@@ -58,7 +58,7 @@ const platform = {
     },
 
     update : function() {
-        if (frames % 50 == 0 && gameState !== 1 && frames >= 150) {
+        if (frames % 70 == 0 && gameState !== 1 && frames >= 150) {
             platforms.push(
                 {
                     x: Math.round(Math.random() * cvs.width) ,
@@ -328,6 +328,9 @@ const player = {
                     this.xvelocity *= 0
                     this.jumpCount = 3
                     this.yvelocity *= .88
+                    // pointSound.currentTime = 0;
+                    pointSound.play();
+                    score += 1;
 
                     this.x = p.x - this.w - this.xvelocity
                     this.currentAnimation = this.rightClimbingAnimation;
@@ -343,6 +346,11 @@ const player = {
                     this.jumpCount = 3
                     this.yvelocity *= .88
                     // this.y += this.gravity
+                    // pointSound.currentTime = 0;
+                    pointSound.play(); 
+                    score += 1;
+
+
                     this.x = p.x + p.w*2 + this.xvelocity - 2 ;
                     this.currentAnimation = this.leftClimbingAnimation;
                 } 
@@ -354,6 +362,10 @@ const player = {
                 this.x + this.w < p.x + p.w*2 &&
                 this.x + this.w > p.x) {
                     this.jumpCount = 3;
+                    // pointSound.currentTime = 0;
+                    pointSound.play();
+                    score += 1;
+
                     this.y = p.y - this.gravity - 4
                     this.onGround = true 
                     if (this.right){
@@ -377,6 +389,9 @@ const player = {
                     } else {
                         this.currentAnimation = this.leftBottomAnimation;
                     }
+                // pointSound.currentTime = 0;
+                pointSound.play();
+                score += 1;
                 }
                 
         }
