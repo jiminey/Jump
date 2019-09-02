@@ -31,8 +31,12 @@ jumpSound.src = "src/assets/sfx_flap.wav"
 pointSound = new Audio(); 
 pointSound.src = "src/assets/sfx_point.wav"
 
+music = new Audio();
+music.src = 'src/assets/sunflowerinstrumental.mp3'
+ 
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
+
 
  //generate platforms
 
@@ -54,7 +58,7 @@ const platform = {
     },
 
     update : function() {
-        if (frames % 50 == 0 && gameState !== 1) {
+        if (frames % 50 == 0 && gameState !== 1 && frames >= 150) {
             platforms.push(
                 {
                     x: Math.round(Math.random() * cvs.width) ,
@@ -73,7 +77,6 @@ const platform = {
             p.y += this.dy;
 
             if (p.y > cvs.height) {
-                pointSound.play();
                 platforms.shift();
                 score += 1;
             }
@@ -379,7 +382,7 @@ const player = {
         }
 
 
-        if (this.y > cvs.height) {
+        if (this.y > cvs.height + 200) {
             gameState = 1;
 
             // setInterval(function() {document.location.reload()}, 2000)
@@ -407,12 +410,12 @@ const player = {
 }
 
 const bg = {
-    sX: 146,
+    sX: 0,
     sY: 0,
-    w: 564,
-    h: 2006,
-    x: -10,
-    y: -200,
+    w: 600,
+    h: 1000,
+    x: 0,
+    y: 700,
     dy: 2,
     
     draw() {
@@ -513,6 +516,8 @@ function draw() {
     platform.draw();
     fg.draw();
     player.draw();
+
+    music.play();
 
 
 
