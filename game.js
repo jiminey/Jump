@@ -382,9 +382,9 @@ const player = {
         }
 
 
-        if (this.y > cvs.height + 200) {
+        if (this.y > cvs.height + 20) {
             gameState = 1;
-
+            platforms = []
             // setInterval(function() {document.location.reload()}, 2000)
             
 
