@@ -3,6 +3,7 @@ const ctx = cvs.getContext("2d");
 
 let frames = 0;
 let score = 0; 
+// let highscore = 0;
 let platforms = []; 
 
 let gameState = 0;
@@ -37,8 +38,20 @@ music.src = 'src/assets/sunflowerinstrumental.mp3'
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
 
+document.getElementById('mute').addEventListener('click', function (evt) {
+    if (music.muted) {
+        music.muted = false
+        evt.target.innerHTML = 'mute'
+    }
+    else {
+        music.muted = true
+        evt.target.innerHTML = 'unmute'
+    }
+})
 
  //generate platforms
+
+ 
 
 const platform = {
     sX: 0,
@@ -58,7 +71,7 @@ const platform = {
     },
 
     update : function() {
-        if (frames % 70 == 0 && gameState !== 1 && frames >= 150) {
+        if (frames % 70 == 0 && gameState !== 1 && frames >= 10) {
             platforms.push(
                 {
                     x: Math.round(Math.random() * cvs.width) ,
@@ -398,8 +411,9 @@ const player = {
 
 
         if (this.y > cvs.height + 20) {
-            gameState = 1;
+            gameState = 1; //lose game
             platforms = []
+
             // setInterval(function() {document.location.reload()}, 2000)
             
 
@@ -524,8 +538,20 @@ function keyUp(evt){
 function drawScore() {
     ctx.font = "25px Arial";
     ctx.fillStyle = "#0095DD";
-    ctx.fillText("Score: " + score, 8, 20);
+    ctx.fillText("Score: " + score, 16, 30);
+    
 }
+
+// function updateScore() {
+//     localStorage.setItem('highscore', highscore);
+//     let highscore = localStorage.getItem('highscore') || 0;
+
+//     if (score > highscore) {
+//         localStorage.setItem('highscore', highscore);
+//     }
+
+//     return highscore 
+// }
 
 
 function draw() {
@@ -543,6 +569,8 @@ function draw() {
 
     music.play();
 
+    
+
 
 
 
@@ -554,6 +582,7 @@ function update() {
     player.update();
     platform.update();
     fg.update();
+
 
 }
 
