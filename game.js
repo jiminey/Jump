@@ -358,7 +358,6 @@ const player = {
                     this.xvelocity *= 0
                     this.jumpCount = 3
                     this.yvelocity *= .88
-                    // this.y += this.gravity
                     // pointSound.currentTime = 0;
                     pointSound.play(); 
                     score += 1;
@@ -555,25 +554,15 @@ function drawScore() {
 
 
 function draw() {
-
     ctx.fillStyle = "#999";
     ctx.fillRect(0, 0, cvs.width, cvs.height);
     ctx.fillStyle = "black";
-
-
     bg.draw();
     platform.draw();
     fg.draw();
     player.draw();
     drawScore(); 
-
     music.play();
-
-    
-
-
-
-
 }
 
 
@@ -582,8 +571,6 @@ function update() {
     player.update();
     platform.update();
     fg.update();
-
-
 }
 
 
