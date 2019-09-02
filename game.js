@@ -520,6 +520,14 @@ function keyUp(evt){
     }
 }
 
+
+function drawScore() {
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Score: " + score, 8, 20);
+}
+
+
 function draw() {
 
     ctx.fillStyle = "#999";
@@ -531,8 +539,10 @@ function draw() {
     platform.draw();
     fg.draw();
     player.draw();
+    drawScore(); 
 
     music.play();
+
 
 
 
