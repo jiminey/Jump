@@ -3,10 +3,9 @@ const ctx = cvs.getContext("2d");
 
 let frames = 0;
 let score = 0; 
-// let highscore = 0;
-let platforms = []; 
-
+let highscore = 0;
 let gameState = 0;
+let platforms = []; 
 
 gameover = new Image();
 gameover.src = "src/assets/gameover.jpg"
@@ -50,9 +49,6 @@ document.getElementById('mute').addEventListener('click', function (evt) {
 })
 
  //generate platforms
-
- 
-
 const platform = {
     sX: 0,
     sY: 114,
@@ -60,7 +56,6 @@ const platform = {
     h: 105,
     x: 250,
     y: cvs.height - 48,
-
     dy: 2, 
 
     draw : function() {
@@ -83,8 +78,6 @@ const platform = {
             this.dy += .1; 
         }
 
-
-        
         for (let i = 0; i < platforms.length; i++) {
             let p = platforms[i];
             p.y += this.dy;
@@ -94,11 +87,8 @@ const platform = {
                 score += 1;
             }
         }
-
-        
     } 
 }
-
 
 const player = {
 
@@ -242,19 +232,14 @@ const player = {
         
     ],
 
-
-
     animationFrame : 0,
     frameTicks : 0,
-
-
     sX : 175,
     sY : 150,
     w : 25,
     h : 25,
     x : 250,
     y : cvs.height -48,
-
     xvelocity : 1,
     yvelocity : 1,
     onGround : false,
@@ -263,26 +248,22 @@ const player = {
     gravity : .3,
     jumpCount : 3,
     diff : 0,
-
     left : true, 
     right : false, 
     
-
     draw : function() {
         let chara = this.currentAnimation[this.animationFrame];
         if (this.right){
-            ctx.drawImage(playersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h, chara.w/1.4, chara.h/1.4)
+            ctx.drawImage(playersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h, chara.w/1, chara.h/1)
         } else {
-            ctx.drawImage(leftplayersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h, chara.w / 1.4, chara.h / 1.4)
+            ctx.drawImage(leftplayersprite, chara.sX, chara.sY, chara.w, chara.h, this.x - 5, this.y - this.h, chara.w / 1, chara.h / 1)
         }
     },
-
 
     update : function() {
 
         //if the game state is get ready state, the chara must run slowly
         this.period = 10;
-
 
         // count frames that have elapsed, increment the animationFrame by 1 each period
         this.frameTicks++;
@@ -294,10 +275,8 @@ const player = {
         //animationFrame goes from 0 to 8, then again to 0
         this.animationFrame = this.animationFrame % this.currentAnimation.length;
 
-        // if (this.xvelocity !== 0 && this.yvelocity !== 0) {
-            if (this.holdLeft) this.xvelocity = -4;
-            if (this.holdRight) this.xvelocity = 4;
-        // }
+        if (this.holdLeft) this.xvelocity = -4;
+        if (this.holdRight) this.xvelocity = 4;
 
         if (this.xvelocity !== 0 && this.yvelocity !== 0) {
             this.x += this.xvelocity;
@@ -326,58 +305,44 @@ const player = {
              
         for (let i = 0; i < platforms.length; i++) {
             let p = platforms[i];
-            
 
-            
-           
+            //right collision
 
-
-            //right
-
-            if (this.x + this.w + this.xvelocity > p.x &&
+            if (this.x + this.w > p.x &&
                 this.x + this.w + this.xvelocity < p.x + p.w*2 &&
                 this.y - this.yvelocity > p.y &&
                 this.y + this.yvelocity < p.y + p.h*2) {
-                    this.xvelocity *= 0
                     this.jumpCount = 3
                     this.yvelocity *= .88
-                    // pointSound.currentTime = 0;
+                    this.x = p.x - this.w
+                    this.currentAnimation = this.rightClimbingAnimation;
+                    this.y += 2;
                     pointSound.play();
                     score += 1;
-
-                    this.x = p.x - this.w - this.xvelocity
-                    this.currentAnimation = this.rightClimbingAnimation;
                 } 
             
-            //left
+            //left collision
 
             if (this.x - this.xvelocity > p.x &&
                 this.x - this.xvelocity < p.x + p.w*2 &&
                 this.y - this.yvelocity > p.y &&
                 this.y + this.yvelocity < p.y + p.h*2) {
-                    this.xvelocity *= 0
                     this.jumpCount = 3
                     this.yvelocity *= .88
-                    // pointSound.currentTime = 0;
-                    pointSound.play(); 
-                    score += 1;
-
-
                     this.x = p.x + p.w*2 + this.xvelocity - 2 ;
                     this.currentAnimation = this.leftClimbingAnimation;
+                    this.y += 2;
+                    pointSound.play(); 
+                    score += 1;
                 } 
 
-            //top
+            //top collision
 
             if (this.y + this.h + this.yvelocity > p.y &&
                 this.y + this.h + this.yvelocity < p.y + p.h*2 &&
                 this.x + this.w < p.x + p.w*2 &&
                 this.x + this.w > p.x) {
                     this.jumpCount = 3;
-                    // pointSound.currentTime = 0;
-                    pointSound.play();
-                    score += 1;
-
                     this.y = p.y - this.gravity - 4
                     this.onGround = true 
                     if (this.right){
@@ -385,10 +350,12 @@ const player = {
                     } else {
                         this.currentAnimation = this.leftTopAnimation;
                     }
-
+                    this.y += 2;
+                    pointSound.play();
+                    score += 1;
                 }
 
-            //bottom
+            //bottom collision
             if (this.y - this.yvelocity - this.h > p.y &&
                 this.y - this.yvelocity - this.h < p.y + p.h*2 + this.h &&
                 this.x + this.w < p.x + p.w*2 &&
@@ -401,23 +368,16 @@ const player = {
                     } else {
                         this.currentAnimation = this.leftBottomAnimation;
                     }
-                // pointSound.currentTime = 0;
+                this.y += 2;
                 pointSound.play();
                 score += 1;
                 }
-                
         }
-
 
         if (this.y > cvs.height + 20) {
             gameState = 1; //lose game
             platforms = []
-
-            // setInterval(function() {document.location.reload()}, 2000)
-            
-
         }
-
         //ground collision
 
         if (this.y >= (fg.y)) {
@@ -425,16 +385,10 @@ const player = {
             this.y = fg.y;
             this.onGround = true; 
         }
-
         //outof screen logic
         if (this.x < 0) this.x = cvs.width; 
         if (this.x > cvs.width) this.x = 0;
-        
-        
     } 
-
-    
-
 }
 
 const bg = {
@@ -447,14 +401,11 @@ const bg = {
     dy: 2,
     
     draw() {
-        // ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y, 510, this.h);
-
         if (gameState === 0 ) {
             ctx.drawImage(background, this.sX, this.sY, this.w, this.h, this.x, this.y - this.h/2 , 690, this.h);
         } else if (gameState === 1 ) {
                 ctx.drawImage(gameover, 0, 0, 650, 650, 0, 0, 550, 700);
         }
-
     },
 
     update() {
@@ -463,7 +414,6 @@ const bg = {
             this.dy += .5;
         }
     }
-
 }
 
 const fg = {
@@ -488,14 +438,15 @@ const fg = {
 
 
 function keyDown(evt){
-    evt.preventDefault();
     switch(evt.keyCode){
         case 37:
+            evt.preventDefault();
             player.holdLeft = true;
             player.left = true;
             player.right = false;
             break; 
         case 38:
+            evt.preventDefault();
             if (player.jumpCount > 0) {
                 player.yvelocity = -8;
                 player.jumpCount -= 1;
@@ -505,12 +456,14 @@ function keyDown(evt){
             }
             break;
         case 39:
+            evt.preventDefault();
             player.holdRight = true;
             player.right = true; 
             player.left = false; 
             break;
         case 32:
-            document.location.reload();
+            evt.preventDefault();
+            reset();
             break;
     }
 }
@@ -534,24 +487,67 @@ function keyUp(evt){
     }
 }
 
+function reset() {
+    platforms = []; 
+    score = 0;
+    gameState = 0;
+    //fg
+    fg.sX = 18
+    fg.sY = 96
+    fg.w = 220
+    fg.h = 48
+    fg.x = 0
+    fg.y = cvs.height - 48
+
+    //bg
+    sX = 0
+    sY = 0
+    w = 600
+    h = 1000
+    x = 0
+    y = 700
+    dy = 2
+
+    //player
+    player.sX= 175
+    player.sY = 150
+    player.w = 25
+    player.h = 25
+    player.x = 250
+    player.y = cvs.height - 48
+    player.xvelocity = 1
+    player.yvelocity = 1
+    player.onGround = false
+    player.holdLeft = false
+    player.holdRight = false
+    player.gravity = .3
+    player.jumpCount = 3
+    player.diff = 0
+    player.left = true
+    player.right = false 
+
+    //platform
+    platform.sX = 0
+    platform.sY = 114
+    platform.w = 105
+    platform.h = 105
+    platform.x = 250
+    platform.y = cvs.height - 48
+    platform.dy = 2 
+
+}
 
 function drawScore() {
     ctx.font = "25px Arial";
     ctx.fillStyle = "#0095DD";
     ctx.fillText("Score: " + score, 16, 30);
+
+    
+    ctx.font = "25px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("HighScore: " + highscore, 16, 60);
     
 }
-
-// function updateScore() {
-//     localStorage.setItem('highscore', highscore);
-//     let highscore = localStorage.getItem('highscore') || 0;
-
-//     if (score > highscore) {
-//         localStorage.setItem('highscore', highscore);
-//     }
-
-//     return highscore 
-// }
 
 
 function draw() {
@@ -572,6 +568,9 @@ function update() {
     player.update();
     platform.update();
     fg.update();
+    if (score > highscore) {
+        highscore = score;
+    }
 }
 
 
