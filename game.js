@@ -488,6 +488,7 @@ const fg = {
 
 
 function keyDown(evt){
+    evt.preventDefault();
     switch(evt.keyCode){
         case 37:
             player.holdLeft = true;
