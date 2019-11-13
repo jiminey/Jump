@@ -1,69 +1,66 @@
 body {
-    background:black;
+  background: black;
 }
 
 .title {
-    color: rgb(0, 89, 255);
-    font-size: 60px;
-    display: flex;
-    justify-content: center;
-    margin-top: -5px;
+  color: rgb(0, 89, 255);
+  font-size: 60px;
+  display: flex;
+  justify-content: center;
+  margin-top: -5px;
 }
 
 .main {
-    display:flex;
-
+  display: flex;
 }
 
 .instruction {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 20px;
-    color: #0095DD;
-    line-height: 300%;
-    flex-wrap: wrap;
-    margin-left: 110px;
-    margin-top: 50px;
-    margin-right: 20px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 20px;
+  color: #0095dd;
+  line-height: 300%;
+  flex-wrap: wrap;
+  margin-left: 110px;
+  margin-top: 50px;
+  margin-right: 20px;
 }
 .instruction2 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 20px;
-    color: #0095DD;
-    line-height: 300%;
-    flex-wrap: wrap;
-    margin-right: 20px;
-    margin-top: 90px;
-    margin-left:110px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 20px;
+  color: #0095dd;
+  line-height: 300%;
+  flex-wrap: wrap;
+  margin-right: 20px;
+  margin-top: 90px;
+  margin-left: 110px;
 }
 .instruction3 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 12px;
-    color: white;
-    line-height: 300%;
-    flex-wrap: wrap;
-    margin-right: 20px;
-    margin-top: 90px;
-    margin-left:110px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 12px;
+  color: white;
+  line-height: 300%;
+  flex-wrap: wrap;
+  margin-right: 20px;
+  margin-top: 90px;
+  margin-left: 110px;
 }
 
 .mute {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 20px;
-    color: #0095DD;
-    line-height: 300%;
-    flex-wrap: wrap;
-    margin-left: 300px;
-    margin-top: 50px;
-    margin-right: 20px;
-
+  font-family: "Press Start 2P", cursive;
+  font-size: 20px;
+  color: #0095dd;
+  line-height: 300%;
+  flex-wrap: wrap;
+  margin-left: 300px;
+  margin-top: 50px;
+  margin-right: 20px;
 }
 
 .spacebar {
-    color:red 
+  color: red;
 }
 
 .word {
-    display:flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-
