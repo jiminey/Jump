@@ -4,7 +4,7 @@
 } */
 
 html { 
-  background-image: url("https://github.com/jiminey/JimmyJumps/blob/master/src/assets/background2.png?raw=true");
+  background-image: URL("https://github.com/jiminey/JimmyJumps/blob/master/src/assets/background2.png?raw=true");
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -12,7 +12,7 @@ html {
 }
 
 .title {
-  color: rgb(0, 89, 255);
+  color: red;
   font-size: 60px;
   display: flex;
   justify-content: center;
