@@ -1,6 +1,14 @@
-body {
+/* body {
   background-image: url("https://github.com/jiminey/JimmyJumps/blob/master/src/assets/background2.png?raw=true");
   background-size: 100% 100%;
+} */
+
+html { 
+  background-image: url("https://github.com/jiminey/JimmyJumps/blob/master/src/assets/background2.png?raw=true");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .title {
