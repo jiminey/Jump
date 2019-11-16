@@ -1,5 +1,6 @@
 body {
-  background-image: url("paper.gif");
+  background-image: url("https://github.com/jiminey/JimmyJumps/blob/master/src/assets/background2.png?raw=true");
+  background-size: cover;
 }
 
 .title {
